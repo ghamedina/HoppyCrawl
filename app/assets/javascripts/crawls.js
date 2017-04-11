@@ -15,10 +15,11 @@ function loadAndCreateGMap() {
     var location = new google.maps.LatLng( $('#crawl_location').data('crawl-lat'), $('#crawl_location').data('crawl-long'))
     map = new google.maps.Map(document.getElementById('crawl_map'), { //makes and puts a new map inside the crawl_map div
       center: location,
-      zoom: 11
+      zoom: 14
     });
 
     infoWindow = new google.maps.InfoWindow();
+    //createMarker for current location
     $(".brewery_stop").each(function () {
       createMarker({'latitude': $(this).data("lat"), 'longitude': $(this).data("long"), 'name': $(this).data("name"), 'website': $(this).data("website"), 'address': $(this).data("address"), 'phone_number': $(this).data("phone-number")})
     })
