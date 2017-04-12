@@ -38,7 +38,7 @@
                  data-website='<%= bs_form.object.brewery.website %>'
                  data-address='<%= bs_form.object.brewery.address %>'
                  data-phone-number='<%= bs_form.object.brewery.phone_number %>'
-                 data-hours='<%= bs_form.object.brewery.hours.gsub("\n", " | ") %>'
+                 data-hours='<%= bs_form.object.brewery.hours.gsub("/n", " | ") %>'
                  data-rating='<%= bs_form.object.brewery.rating %>'
             >
               <%= bs_form.hidden_field :brewery_id %>
@@ -63,7 +63,7 @@
                    data-website='<%= bs_form.object.brewery.website %>'
                    data-address='<%= bs_form.object.brewery.address %>'
                    data-phone-number='<%= bs_form.object.brewery.phone_number %>'
-                   data-hours='<%= bs_form.object.brewery.hours %>'
+                   data-hours="<%= bs_form.object.brewery.hours.gsub('/n', ' | ') %>"
                    data-rating='<%= bs_form.object.brewery.rating %>'
               >
                 <%= bs_form.hidden_field :brewery_id %>

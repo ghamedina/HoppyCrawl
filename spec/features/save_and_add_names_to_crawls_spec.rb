@@ -14,13 +14,13 @@ RSpec.feature "SaveAndAddNamesToCrawls", type: :feature do
         expect(page).to have_content("Name")
       end
       Then "I can change the crawl name and save my changes" do
-        fill_in 'Name', with: "Best Crawls Evah"
-        save_and_open_page
+
+        fill_in 'crawl_name', with: "Best Crawls Evah"
         click_button "Update Crawl"
       end
       And "I am a signed in user on the crawls index page and can only see my crawls" do
         click_link 'Crawls'
-        save_and_open_page
+        
         expect(page).to have_content ("Best Crawls Evah")
       end
     end
