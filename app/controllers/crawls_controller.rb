@@ -71,10 +71,17 @@ class CrawlsController < ApplicationController
   end
 
   def make_shareable
-    @crawl.shareable = true
-    @crawl.save
+    if @crawl.shareable == false
+      @crawl.shareable = true
+      @crawl.save
+    else
+      @crawl.shareable = false
+      @crawl.save
+    end
     redirect_to '/crawls'
   end
+
+
 
   # PATCH/PUT /crawls/1
   # PATCH/PUT /crawls/1.json
@@ -85,7 +92,7 @@ class CrawlsController < ApplicationController
         format.json { render :show, status: :ok, location: @crawl }
       else
         format.html { render :edit }
-        format.json { render json: @crawl.errors, status: :unprocessable_entity }
+        format.json { render json: @crawl.errors, status: :unprocessable_entity, notice: 'Crawl failed to update.' }
       end
     end
   end

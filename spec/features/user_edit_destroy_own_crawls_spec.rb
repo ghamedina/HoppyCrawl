@@ -13,8 +13,10 @@ RSpec.feature "UserEditDestroyOwnCrawls", type: :feature do
         click_link 'Edit'
         expect(page).to have_content('Make A New Crawl')
         fill_in "crawl[name]", with: "My cool crawl"
-        click_button 'Update Crawl'
+        # click_button 'Update Crawl'
+        find('input[name="commit"]').click
         @crawl.reload
+        save_and_open_page
         expect(page).to have_content('Crawl was successfully updated.')
         expect(@crawl.name).to eq 'My cool crawl'
       end
