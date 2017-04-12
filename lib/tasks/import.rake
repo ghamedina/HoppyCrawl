@@ -1,16 +1,12 @@
 namespace :import do
   desc "hello world"
   task :run => :environment do
-    puts "rake tasks!"
-    puts "#{Brewery.count}"
-  end
-  task :import => :environment do
     BreweryStop.destroy_all #avoids duplicates; comment out if you don't want it
     Brewery.destroy_all
-    @client = GooglePlaces::Client.new("AIzaSyCDHE8udpCQDeuFAqpBaKIYaYMrYZ1kHjs")
+    @client = GooglePlaces::Client.new("AIzaSyBJ54EUBnt0RwAEIaIseMJQV2Dvnhmu_pA")
     sd_breweries = @client.spots_by_query('Breweries in San Diego', :multipage => true) #gets 60 breweries in San Diego
-    la_breweries = @client.spots_by_query('Breweries in Los Angeles', :multipage => true)
-    sf_breweries = @client.spots_by_query('Breweries in San Francisco', :multipage => true)
+    # la_breweries = @client.spots_by_query('Breweries in Los Angeles', :multipage => true)
+    # sf_breweries = @client.spots_by_query('Breweries in San Francisco', :multipage => true)
     # mn_breweries = @client.spots_by_query('Breweries in Minneapolis', :multipage => true)
     # ml_breweries = @client.spots_by_query('Breweries in Milwaukee', :multipage => true)
     # gr_breweries = @client.spots_by_query('Breweries in Grand Rapids', :multipage => true)
@@ -27,40 +23,43 @@ namespace :import do
         brewery.address = sd_b.formatted_address
         brewery.latitude = sd_b.lat
         brewery.longitude = sd_b.lng
-        brewery.website = @client.spot(sd_b.place_id).website
-        brewery.phone_number = @client.spot(sd_b.place_id).formatted_phone_number
+        spot = @client.spot(sd_b.place_id)
+        brewery.website = spot.website
+        brewery.phone_number = spot.formatted_phone_number
         # We may need to modify the hours column in the brewery table to json form text
-        # brewery.hours = @client.spot(sd_b.place_id).opening_hours
+        brewery.hours = spot.opening_hours["weekday_text"].try(:join, "\n")
+        brewery.rating = spot.rating
         brewery.save
       end
     end
-    puts Brewery.count
-    la_breweries.each do |la_b|
-      if(Brewery.find_by_address(la_b.formatted_address).nil?)
-        brewery = Brewery.new
-        brewery.name = la_b.name
-        brewery.address = la_b.formatted_address
-        brewery.latitude = la_b.lat
-        brewery.longitude = la_b.lng
-        brewery.website = @client.spot(la_b.place_id).website
-        brewery.phone_number = @client.spot(la_b.place_id).formatted_phone_number
 
-        brewery.save
-      end
-    end
-    sf_breweries.each do |sf_b|
-      if(Brewery.find_by_address(sf_b.formatted_address).nil?)
-        brewery = Brewery.new
-        brewery.name = sf_b.name
-        brewery.address = sf_b.formatted_address
-        brewery.latitude = sf_b.lat
-        brewery.longitude = sf_b.lng
-        brewery.website = @client.spot(sf_b.place_id).website
-        brewery.phone_number = @client.spot(sf_b.place_id).formatted_phone_number
-
-        brewery.save
-      end
-    end
+    # puts Brewery.count
+    # la_breweries.each do |la_b|
+    #   if(Brewery.find_by_address(la_b.formatted_address).nil?)
+    #     brewery = Brewery.new
+    #     brewery.name = la_b.name
+    #     brewery.address = la_b.formatted_address
+    #     brewery.latitude = la_b.lat
+    #     brewery.longitude = la_b.lng
+    #     brewery.website = @client.spot(la_b.place_id).website
+    #     brewery.phone_number = @client.spot(la_b.place_id).formatted_phone_number
+    #
+    #     brewery.save
+    #   end
+    # end
+    # sf_breweries.each do |sf_b|
+    #   if(Brewery.find_by_address(sf_b.formatted_address).nil?)
+    #     brewery = Brewery.new
+    #     brewery.name = sf_b.name
+    #     brewery.address = sf_b.formatted_address
+    #     brewery.latitude = sf_b.lat
+    #     brewery.longitude = sf_b.lng
+    #     brewery.website = @client.spot(sf_b.place_id).website
+    #     brewery.phone_number = @client.spot(sf_b.place_id).formatted_phone_number
+    #
+    #     brewery.save
+    #   end
+    # end
     # mn_breweries.each do |mn_b|
     #   if(Brewery.find_by_address(mn_b.formatted_address).nil?) #if there is not already a brewery at mn_b's address
     #     brewery = Brewery.new

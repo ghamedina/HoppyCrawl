@@ -41,6 +41,7 @@
 #crawl_map {
   width: 500px;
   height: 500px;
+  float: left;
 }
 
 .three-p{
@@ -96,6 +97,12 @@
     font-size: 1.8rem;
 }
 
+.modal_button {
+  background-color: #f7c311;
+  color: white;
+  border-radius: 5px;
+}
+
 #age_check {
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 2.5rem;
@@ -117,7 +124,7 @@ body#crawls_landing_page {
 }
 
 body#crawls_show {
-  background: image-url("new_crawl_img.png") no-repeat center center fixed;
+  background: image-url("crawl_img.png") no-repeat center center fixed;
   visibility: inherit;
   background-size: cover;
   top: 0;
@@ -154,6 +161,18 @@ span{
   border-radius: 5px;
 }
 
+#new_crawl_button {
+  color: #FFF;
+  // main citrus color//
+  background-color: #f7c311;
+  width: 80px;
+  height: 30px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+}
+
+
+
 #hop_text{
   font-size: 9rem;
 }
@@ -169,13 +188,19 @@ a:visited{
   font-family: 'Open Sans Condensed';
   font-size: inherit;
 }
-#crawl_name{
-  font-size: 2.3rem;
-  text-align: center;
+
+// #crawl_name{
+//   font-size: 2.3rem;
+//   text-align: center;
+// }
+
+select {
+  color: #FFF;
+  background-color: #f7c311;
 }
 
 #crawls_index{
-  background: image-url("new_crawl_img.png") no-repeat center center fixed;
+  background: image-url("crawl_img.png") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -209,20 +234,51 @@ thead{
 
 input {
   color :#5A91EE;
+
 }
 
 .container {
   text-align: center;
 }
 
+#loc_ready {
+  position: relative;
+}
+
+#loading_gif{
+  position: absolute;
+  bottom: 2px;
+}
+
+
 select {
-  color: #5A91EE;
+//  color: #5A91EE;
+}
+//
+// #bg-brew-crawls {
+//   background-color: rgba(0,0,0,0.5);
+//   // padding: 5px 0 0px 0;
+//   display: inline-block;
+//   float: right;
+//   width: 100%
+// }
+
+#update_crawl_button {
+  color: #FFF;
+  // main citrus color//
+  background-color: #f7c311;
+  width: 100px;
+  height: 30px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  position: relative;
+ margin-top: 50px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: 0px;
+
 }
 
-
-input {
-  color :#5A91EE;
-}
 
 .container {
   text-align: center;
@@ -232,9 +288,13 @@ h4, h5 {
   color: #f7c311;
 }
 
+h5 {
+  font-size: large;
+}
+
 .brewery_stop {
   label {
-    color: #f7c311;
+    color: white;
   }
 }
 
@@ -246,4 +306,11 @@ h4, h5 {
 
 .gm-style-iw {
   color: black;
+}
+
+#crawls_info_div{
+  padding-bottom: 30px;
+  // border: 2px black solid;
+  // background-color: grey;
+  // border-top-left-radius: 100%;
 }

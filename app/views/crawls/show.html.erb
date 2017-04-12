@@ -1,29 +1,19 @@
 <div class="container" >
   <%= form_for @crawl do |f| %>
-    <div class="row" style="margin-bottom: 20px; text-align:center;">
-      <div class="col-md-3">
-        <h4>Make A New Crawl</h4>
-        <%= form_tag("/crawls/create") do %>
-          <%= text_field_tag 'address', nil, placeholder: "Enter Location" %>
-          <%= submit_tag 'New Crawl' %>
-        <% end %>
+    <div id="crawls_info_div" class="row" style="margin-bottom: 20px; text-align:center;">
+      <div class="col-md-4">
+        <h4><%= f.label :name_your_crawl %></h4>
+        <%= f.text_field :name, placeholder: "Enter Name" %>
       </div>
-      <div class="col-md-3">
-        <h4><%= f.label :name %></h4>
-        <%= f.text_field :name %>
-      </div>
-
-      <div class="col-md-3">
+      <div class="col-md-4">
         <h4><%= f.label :address %></h4>
-        <%= f.text_field :address %> <!-- Doesn't do anything yet before changing the map location - doesnt update brew stops -->
+        <%= f.text_field :address, placeholder: "Enter Address" %> <!-- Doesn't do anything yet before changing the map location - doesnt update brew stops -->
       </div>
-
-      <div class="col-md-3">
+      <div class="col-md-4">
         <h4><%= f.label :date %></h4>
         <%= f.date_select :date %>
       </div>
     </div> <!-- End of row1 col1 -->
-
 
     <div class="row">
       <div class="col-md-6">
@@ -37,7 +27,7 @@
           <div id="crawl_location" data-crawl-lat='<%=@crawl.latitude%>' data-crawl-long='<%=@crawl.longitude%>'></div>
         </div>
       <% else %>
-        <div class="col-md-3">
+        <div id='brew-col-left' class="col-md-3">
           <div id="crawl_location" data-crawl-lat='<%=@crawl.latitude%>' data-crawl-long='<%=@crawl.longitude%>'></div>
           <% @crawl.brewery_stops.count>= 3 ? brew_count = 2 : brew_count = 0%>
           <%= f.fields_for :brewery_stops, @crawl.brewery_stops.order(start_time: :asc)[0..brew_count] do |bs_form| %>
@@ -48,7 +38,7 @@
                  data-website='<%= bs_form.object.brewery.website %>'
                  data-address='<%= bs_form.object.brewery.address %>'
                  data-phone-number='<%= bs_form.object.brewery.phone_number %>'
-                 data-hours='<%= bs_form.object.brewery.hours %>'
+                 data-hours='<%= bs_form.object.brewery.hours.gsub("\n", " | ") %>'
                  data-rating='<%= bs_form.object.brewery.rating %>'
             >
               <%= bs_form.hidden_field :brewery_id %>
@@ -62,7 +52,7 @@
           <% end %> <!-- End of first 3 brew stops -->
         </div> <!-- End of col 2, col 1 -->
 
-        <div class="col-md-3">
+        <div id="brew_col_right" class="col-md-3">
           <div id="crawl_location" data-crawl-lat='<%=@crawl.latitude%>' data-crawl-long='<%=@crawl.longitude%>'></div>
           <% if @crawl.brewery_stops.count > 3 %>
             <%= f.fields_for :brewery_stops, @crawl.brewery_stops.order(start_time: :asc)[3..@crawl.brewery_stops.count-1] do |bs_form| %>
@@ -90,6 +80,6 @@
       <% end %>
       <br>
     </div> <!-- End of Row 2 -->
-    <%= f.submit %>
+    <%= f.submit :id => 'update_crawl_button' %>
   <% end %> <!-- form_for @crawl do |f| -->
 </div> <!--Container close -->
